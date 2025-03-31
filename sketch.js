@@ -1,3 +1,8 @@
+//create base class with same properties
+//in options change experiment restitution friction density
+//create 3 objects from class w/ different options
+
+
 //namespacing
 const Engine = Matter.Engine
 const Bodies = Matter.Bodies
@@ -5,15 +10,15 @@ const World = Matter.World
 //variables for game
 var engine
 var world
-var object
 var floor
 var backgroundImage
-var objectOptions
-var floorOptions
-var circle1
-var cOptions
-var r
-var rOptions
+var ground
+var greenR
+var purpleR
+var blackR
+var bird
+var box1
+var log1
 
 function preload(){
 
@@ -24,64 +29,34 @@ function setup(){
     engine = Engine.create()
     world = engine.world;
 
-    floorOptions = {
-        'isStatic': true
-    }
-    floor = Bodies.rectangle(0, height-30, width, height, floorOptions)
-    floor.width = width
-    floor.height = height
-    World.add(world, floor)
+    ground = new Ground(width/2, height-15, 2000, 40)
 
-    cOptions = {
-        'isStatic': false
-    }
-    circle1 = Bodies.circle(width/2, height/2, 100, cOptions)
-    World.add(world, circle1)
+    greenR = new Base(width/2, height/2 + 20, 50, 50)
+    purpleR = new Base(width/2, height/1.5, 60, 60)
+    blackR = new Base(width/2, height/3, 200, 50)
 
-    rOptions = {
-        'isStatic': false
-    }
-    r = Bodies.rectangle(width/2, height+30, width, height, rOptions)
-    r.width = 50
-    r.height = 200
-    World.add(world, r)
+    bird = new Bird(width/2 + 50, height/5, 50, 50)
 
-    objectOptions = {
-        'isStatic': false,
-        'restitution': 0.9
-    }
-    object = Bodies.rectangle(width/2, height/2, width, height, objectOptions)
-    w = 50
-    h = 50
-    World.add(world, object)
-    console.log(object)
+    box1 = new Box(width/2, height/2, 75, 75)
+
+    log1 = new Log(width/2, height/4, 250, 20)
 }
 
 function draw(){
     background("white")
     Engine.update(engine)
 
-    push()
-    fill("green")
-    var floorPos = floor.position
-    rect(floorPos.x, floorPos.y, floor.width, floor.height)
-    pop()
+    ground.display()
 
-    push()
-    fill("blue")
-    var circle1Pos = circle1.position
-    ellipse(circle1Pos.x, circle1Pos.y, 100)
-    pop()
+    greenR.display("green")
 
-    push()
-    fill("orange")
-    var rPos = r.position
-    rect(rPos.x, rPos.x, r.width, r.height)
-    pop()
+    blackR.display("black")
 
-    push()
-    fill("red")
-    var pos = object.position
-    rect(pos.x, pos.y, w, h)
-    pop()
+    purpleR.display("purple")
+
+    bird.display()
+
+    box1.display()
+
+    log1.display()
 }
